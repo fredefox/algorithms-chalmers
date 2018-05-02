@@ -1,0 +1,101 @@
+\subsection*{Question a}
+
+Since the graph is connected, this means, by definition, that there must be a
+path between any given pair of nodes, this also means that for any node, there
+must have an edge connected to it. So we get the inequality $n \leq m$. We want
+to use this to show $O(n+m)=O(m)$. So let $f \in O(n+m)$:
+%
+\begin{align*}
+  f \in O(n + m) & \Leftrightarrow
+  \exists c \in \mathbb{N} \colon \exists N \in \mathbb{N} \colon \forall n \geq N \colon \forall m \geq N \colon
+  f\ n\ m \leq c \cdot ( n + m )
+\end{align*}
+%
+So instantiate the quantifiers with $c$, $N$, $n$ and $m$ respectively:
+%
+\begin{align*}
+  f\ n\ m & \leq c \cdot ( n + m ) \leq c \cdot ( m + m ) \leq c \cdot 2 \cdot m
+\end{align*}
+%
+So $2 \cdot c$, $N$, $n$, and $m$ demonstrate that the following holds:
+%
+\begin{align*}
+    \exists c \in \mathbb{N} \colon \exists N \in \mathbb{N} \colon \forall n \geq N \colon \forall m \geq N \colon
+    f\ n\ m \leq c \cdot m \Leftrightarrow f \in O(m)
+\end{align*}
+%
+And in the other direction, let $f \in O(m)$:
+%
+\begin{align*}
+  f \in O(m) & \Leftrightarrow
+  \exists c \in \mathbb{N} \colon \exists N \in \mathbb{N} \colon \forall n \geq N \colon \forall m \geq N \colon
+  f\ n\ m \leq c \cdot m
+\end{align*}
+%
+So instantiate the quantifiers with $c$, $N$, $n$ and $m$ respectively:
+%
+\begin{align*}
+  f\ n\ m & \leq c \cdot m \leq c \cdot ( n + m )
+\end{align*}
+%
+So $c$, $N$, $n$, and $m$ demonstrate that the following holds:
+%
+\begin{align*}
+  \exists c \in \mathbb{N} \colon \exists N \in \mathbb{N} \colon \forall n \geq N \colon \forall m \geq N \colon
+  f\ n\ m \leq c \cdot (n + m) \Leftrightarrow f \in O(n + m)
+\end{align*}
+%
+And so we conclude that $O(n+m) = O(m)$ as desired. \QED
+%
+\subsection*{Question b}
+%
+For this question I'll reason a little bit less formally - leaving out the
+quantifiers needed to establish membership of big-oh.
+
+The inclusion $O(m\lg n) \subseteq O(m\lg m)$ follows trivially from $n \leq m$. In the other case we have:
+%
+\begin{align*}
+  m \cdot \lg m \leq m \cdot \lg n^2 \leq m \cdot 2 \cdot \lg n
+\end{align*}
+%
+And so the other inclusion holds as well leaving us to conclude $O(m\lg n)
+= O(m\lg m)$. \QED
+%
+\subsection*{Question c}
+This statement is not true. The following graph is a counter-example:
+$G=(V,E)$:
+%
+\begin{align*}
+  V & = \{0,1,2,3\} \\
+  E & = \{\{0,1\},\{0,2\},\{0,3\},\{1,2\},\{2,3\}\}
+\end{align*}
+%
+Here's a sample illustration of the graph:
+%
+\begin{verbatim}
+0 - 1
+| \ |
+3 - 2
+\end{verbatim}
+%
+Here, $\{0,1,2,3\}$ is a minimum spanning tree (i.e. the result of a possible
+depth-first search), but $\{0,2,3\}$ is a path with two edges not in this tree.
+
+I'm pretty sure I don't understand the second part of this question. An
+algorithm for finding cycles in a graph could go like this: Pick a node, do
+depth-first search, saving each node we visit along the way in a list. If we
+encounter a node that we have seen before, remove all elements up to this node.
+Return the list.
+%
+\subsection*{Question d}
+My algorithm goes like this: Pick a node, perform depth-first search on this
+while coloring nodes using the following system: A color is chosen for the first
+node. Each subsequent new node we visit gets colored the opposite of the node
+preceding it. If we try to visit a node we have already colored, if that color
+is inconsistent with what we would've colored it, report that the graph is not
+bipartite.
+
+This algorithm is correct because each time we visit a new node the bipartite
+property requires that the new node must have a different color. And since the
+problem is symmetric (a 2-coloring is valid if and only if the ``inverted''
+two-coloring is valid) we can not make a ``wrong'' chioce at any point.

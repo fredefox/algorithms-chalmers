@@ -1,0 +1,11 @@
+\section{Problem 1: P-NP Thriller}
+
+The problem with the argument is that a formula in \emph{CNF} cannot be
+transformed to a formula in \emph{DNF} in polynomial time:
+
+\begin{align*}
+  \bigwedge_{l=0}^{i<m+1} \left( \bigvee_{i=0}^{i<n_j} \phi_i \right) & \equiv
+  \bigwedge_{l=0}^{i<m} \left( \bigvee_{i=0}^{i<n_j} \phi_i \right)
+  \land \left( \bigvee_{i=0}^{i<n_{m+1}} \phi_i \right) \\
+  & \ldots
+\end{align*}
